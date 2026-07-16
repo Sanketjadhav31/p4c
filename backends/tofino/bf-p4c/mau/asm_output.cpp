@@ -1995,7 +1995,7 @@ bool MauAsmOutput::emit_gateway(std::ostream &out, indent_t gw_indent, const IR:
                     out << Slice(field, sl.field_slice());
                     if (f.second.valid_bit) out << ")";
                     sep = ", ";
-                    BUG_CHECK(bits_done.getrange(bit, sl.width()) == 0,
+                    BUG_CHECK(bits_done.getslice(bit, sl.width()).empty(),
                               "partial overlapping gateway fields in %s", tbl);
                     bits_done.setrange(bit, sl.width());
                 });
@@ -2014,7 +2014,7 @@ bool MauAsmOutput::emit_gateway(std::ostream &out, indent_t gw_indent, const IR:
                         if (bits_done[bit]) return;  // supress duplicates
                         out << sep << bit << ": " << Slice(field, sl.field_slice());
                         sep = ", ";
-                        BUG_CHECK(bits_done.getrange(bit, sl.width()) == 0,
+                        BUG_CHECK(bits_done.getslice(bit, sl.width()).empty(),
                                   "partial overlapping gateway fields in %s", tbl);
                         bits_done.setrange(bit, sl.width());
                     });
